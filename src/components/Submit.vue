@@ -13,7 +13,7 @@
 </template>
 
 <script>
-// import { types as actions } from '../store/actions';
+import { types as actions } from '../store/actions';
 
 export default {
   name: 'Login',
@@ -26,26 +26,21 @@ export default {
   },
   methods: {
     submit() {
-
+      this.errors = [];
+      if (this.title && this.url) {
+        this.$store.dispatch(actions.SUBMIT, {
+          title: this.title,
+          url: this.url,
+        }).then(() => {
+          this.$router.push('/');
+        });
+      } else {
+        this.errors.push('Credentials missing.');
+      }
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+<style scoped></style>

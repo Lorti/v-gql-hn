@@ -3,6 +3,7 @@ export const types = {
   LOGOUT: 'LOGOUT',
   SET_USER: 'SET_USER',
   SET_NEWS: 'SET_NEWS',
+  ADD_NEWS: 'ADD_NEWS',
 };
 
 export default {
@@ -20,5 +21,8 @@ export default {
   },
   [types.SET_NEWS]: (state, news) => {
     state.news = news;
+  },
+  [types.ADD_NEWS]: (state, news) => {
+    state.news.unshift(news);
   },
 };

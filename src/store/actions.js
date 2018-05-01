@@ -8,6 +8,7 @@ export const types = {
   LOGOUT: 'LOGOUT',
   FETCH_USER: 'FETCH_USER',
   FETCH_NEWS: 'FETCH_NEWS',
+  SUBMIT: 'SUBMIT',
 };
 
 const loggedInUser = gql `
@@ -37,6 +38,16 @@ const fetchLatestNews = gql `
   }
 `;
 
+const createNews = gql `
+  mutation createNews($title: String!, $url: String!, $authorId: ID!) {
+    createNews(title: $title, url: $url, authorId: $authorId) {
+      id,
+      title,
+      url
+    }
+  }
+`;
+
 export default {
   [types.LOGIN]({ commit }, credentials) {
     return apollo.mutate({
@@ -52,6 +63,7 @@ export default {
     commit(mutationTypes.LOGOUT);
   },
   [types.FETCH_USER]({ commit }) {
+    // TODO Resolve duplicate header settings.
     const token = localStorage.getItem('token');
     if (!token) {
       return Promise.resolve();
@@ -72,6 +84,26 @@ export default {
       query: fetchLatestNews,
     }).then(({ data: { allNews: news } }) => {
       commit(mutationTypes.SET_NEWS, news);
+    });
+  },
+  [types.SUBMIT]({ commit, state }, news) {
+    // TODO Resolve duplicate header settings.
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return Promise.resolve();
+    }
+    return apollo.mutate({
+      mutation: createNews,
+      variables: Object.assign({}, news, {
+        authorId: state.userId,
+      }),
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    }).then(({ data: { createNews: result } }) => {
+      commit(mutationTypes.ADD_NEWS, result);
     });
   },
 };
