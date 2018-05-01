@@ -16,6 +16,9 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
   },
+  created() {
+    this.$store.dispatch(actions.FETCH_USER);
+  },
   methods: {
     logout() {
       this.$store.dispatch(actions.LOGOUT);

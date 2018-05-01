@@ -13,17 +13,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag';
 import { types as actions } from '../store/actions';
-
-const authenticateUser = gql `
-  mutation authenticateUser($email: String!, $password: String!) {
-    authenticateUser(email: $email, password: $password) {
-      id,
-      token
-    }
-  }
-`;
 
 export default {
   name: 'Login',
@@ -42,14 +32,10 @@ export default {
     submit() {
       this.errors = [];
       if (this.email && this.password) {
-        this.$apollo.mutate({
-          mutation: authenticateUser,
-          variables: {
-            email: this.email,
-            password: this.password,
-          },
-        }).then(({ data: { authenticateUser: result } }) => {
-          this.$store.dispatch(actions.LOGIN, result);
+        this.$store.dispatch(actions.LOGIN, {
+          email: this.email,
+          password: this.password,
+        }).then(() => {
           this.$router.push(this.redirect);
         }).catch((error) => {
           this.errors.push('Authentication failed.');
