@@ -4,6 +4,11 @@
 
 ## Build Setup
 
+### Graphcool
+https://github.com/graphcool-examples/vue-graphql/tree/master/quickstart-with-apollo
+https://github.com/graphcool/templates/tree/master/auth/email-password
+
+### Vue.js
 ``` bash
 # install dependencies
 npm install
@@ -26,5 +31,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

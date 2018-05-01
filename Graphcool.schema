@@ -1,0 +1,10 @@
+type News {
+  id: ID! # Graphcool
+
+  author: User!
+  title: String!
+  url: String!
+
+  createdAt: DateTime! # Graphcool
+  updatedAt: DateTime! # Graphcool
+}
