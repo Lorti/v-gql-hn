@@ -3,6 +3,12 @@
     <router-link to="/submit">Submit</router-link>
     <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
     <button v-else @click="logout">Logout</button>
+    <ul>
+      <li v-for="item in news" :key="item.id">
+        <a :href="item.url">{{ item.title }}</a>
+        <small>{{ item.url | host }}</small>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -15,9 +21,13 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
+    news() {
+      return this.$store.getters.news;
+    },
   },
   created() {
     this.$store.dispatch(actions.FETCH_USER);
+    this.$store.dispatch(actions.FETCH_NEWS);
   },
   methods: {
     logout() {

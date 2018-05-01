@@ -7,6 +7,7 @@ export const types = {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
   FETCH_USER: 'FETCH_USER',
+  FETCH_NEWS: 'FETCH_NEWS',
 };
 
 const loggedInUser = gql `
@@ -22,6 +23,16 @@ const authenticateUser = gql `
     authenticateUser(email: $email, password: $password) {
       id,
       token
+    }
+  }
+`;
+
+const fetchLatestNews = gql `
+  query {
+    allNews(orderBy: createdAt_DESC) {
+      id,
+      title,
+      url
     }
   }
 `;
@@ -54,9 +65,13 @@ export default {
       },
     }).then(({ data: { loggedInUser: { id } } }) => {
       commit(mutationTypes.SET_USER, id);
-    }).catch((error) => {
-      // eslint-disable-next-line
-      console.error(error);
+    });
+  },
+  [types.FETCH_NEWS]({ commit }) {
+    return apollo.query({
+      query: fetchLatestNews,
+    }).then(({ data: { allNews: news } }) => {
+      commit(mutationTypes.SET_NEWS, news);
     });
   },
 };

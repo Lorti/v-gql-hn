@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     userId: null,
     isLoggedIn: !!localStorage.getItem('token'),
+    news: [],
   },
   actions,
   mutations,
