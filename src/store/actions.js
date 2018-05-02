@@ -63,18 +63,8 @@ export default {
     commit(mutationTypes.LOGOUT);
   },
   [types.FETCH_USER]({ commit }) {
-    // TODO Resolve duplicate header settings.
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return Promise.resolve();
-    }
     return apollo.query({
       query: loggedInUser,
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     }).then(({ data: { loggedInUser: { id } } }) => {
       commit(mutationTypes.SET_USER, id);
     });
@@ -87,21 +77,11 @@ export default {
     });
   },
   [types.SUBMIT]({ commit, state }, news) {
-    // TODO Resolve duplicate header settings.
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return Promise.resolve();
-    }
     return apollo.mutate({
       mutation: createNews,
       variables: Object.assign({}, news, {
         authorId: state.userId,
       }),
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     }).then(({ data: { createNews: result } }) => {
       commit(mutationTypes.ADD_NEWS, result);
     });
