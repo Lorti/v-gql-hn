@@ -7,7 +7,9 @@
       <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
       <a v-else @click="logout">Logout</a>
     </nav>
-    <router-view/>
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
@@ -57,5 +59,13 @@ a {
   color: #42b983;
   text-decoration: underline;
   cursor: pointer;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .25s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
