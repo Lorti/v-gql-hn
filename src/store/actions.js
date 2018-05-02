@@ -72,6 +72,7 @@ export default {
   [types.FETCH_NEWS]({ commit }) {
     return apollo.query({
       query: fetchLatestNews,
+      fetchPolicy: 'network-only',
     }).then(({ data: { allNews: news } }) => {
       commit(mutationTypes.SET_NEWS, news);
     });

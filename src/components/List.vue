@@ -18,7 +18,14 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch(actions.FETCH_NEWS);
+    const fetchNews = () => {
+      this.$store.dispatch(actions.FETCH_NEWS);
+    };
+    fetchNews();
+    this.pollingInterval = setInterval(fetchNews, 60000);
+  },
+  destroyed() {
+    clearInterval(this.pollingInterval);
   },
 };
 </script>
