@@ -8,12 +8,12 @@
     <input id="title" type="text" name="title" size="20" v-model="title">
     <label for="url">URL:</label>
     <input id="url" type="text" name="url" size="20" v-model="url">
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" :disabled="loading">
   </form>
 </template>
 
 <script>
-import { types as actions } from '../store/actions';
+import { actionTypes } from '../store/actions';
 
 export default {
   name: 'Login',
@@ -22,21 +22,29 @@ export default {
       errors: [],
       title: null,
       url: null,
+      loading: false,
     };
   },
   methods: {
     submit() {
       this.errors = [];
-      if (this.title && this.url) {
-        this.$store.dispatch(actions.SUBMIT, {
-          title: this.title,
-          url: this.url,
-        }).then(() => {
-          this.$router.push('/');
-        });
-      } else {
-        this.errors.push('Credentials missing.');
+
+      if (!this.title || !this.url) {
+        return;
       }
+
+      this.loading = true;
+
+      this.$store.dispatch(actionTypes.SUBMIT, {
+        title: this.title,
+        url: this.url,
+      }).then(() => {
+        this.$router.push('/');
+        this.loading = false;
+      }).catch(() => {
+        this.errors.push('Submit failed.');
+        this.loading = false;
+      });
     },
   },
 };

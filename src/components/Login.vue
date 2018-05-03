@@ -8,12 +8,12 @@
     <input id="email" type="text" name="email" size="20" v-model="email">
     <label for="password">Password:</label>
     <input id="password" type="password" name="password" size="20" v-model="password">
-    <input type="submit" value="Login">
+    <input type="submit" value="Login" :disabled="loading">
   </form>
 </template>
 
 <script>
-import { types as actions } from '../store/actions';
+import { actionTypes } from '../store/actions';
 
 export default {
   name: 'Login',
@@ -23,6 +23,7 @@ export default {
       email: null,
       password: null,
       redirect: null,
+      loading: false,
     };
   },
   created() {
@@ -31,18 +32,24 @@ export default {
   methods: {
     submit() {
       this.errors = [];
-      if (this.email && this.password) {
-        this.$store.dispatch(actions.LOGIN, {
-          email: this.email,
-          password: this.password,
-        }).then(() => {
-          this.$router.push(this.redirect);
-        }).catch(() => {
-          this.errors.push('Authentication failed.');
-        });
-      } else {
+
+      if (!this.email || !this.password) {
         this.errors.push('Credentials missing.');
+        return;
       }
+
+      this.loading = true;
+
+      this.$store.dispatch(actionTypes.LOGIN, {
+        email: this.email,
+        password: this.password,
+      }).then(() => {
+        this.$router.push(this.redirect);
+        this.loading = false;
+      }).catch(() => {
+        this.errors.push('Login failed.');
+        this.loading = false;
+      });
     },
   },
 };

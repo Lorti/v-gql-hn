@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import { types as actions } from './store/actions';
+import { actionTypes } from './store/actions';
 
 export default {
   name: 'App',
   created() {
-    this.$store.dispatch(actions.FETCH_USER);
+    this.$store.dispatch(actionTypes.FETCH_USER);
   },
   computed: {
     isLoggedIn() {
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch(actions.LOGOUT);
+      this.$store.dispatch(actionTypes.LOGOUT);
       this.$router.push('/');
     },
   },

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { types as actions } from '../store/actions';
+import { actionTypes } from '../store/actions';
 
 export default {
   name: 'List',
@@ -19,7 +19,7 @@ export default {
   },
   created() {
     const fetchNews = () => {
-      this.$store.dispatch(actions.FETCH_NEWS);
+      this.$store.dispatch(actionTypes.FETCH_NEWS);
     };
     fetchNews();
     this.pollingInterval = setInterval(fetchNews, 60000);
