@@ -65,8 +65,10 @@ export default {
   [types.FETCH_USER]({ commit }) {
     return apollo.query({
       query: loggedInUser,
-    }).then(({ data: { loggedInUser: { id } } }) => {
-      commit(mutationTypes.SET_USER, id);
+    }).then(({ data: { loggedInUser: user } }) => {
+      if (Object.hasOwnProperty.call(user || {}, 'id')) {
+        commit(mutationTypes.SET_USER, user.id);
+      }
     });
   },
   [types.FETCH_NEWS]({ commit }) {

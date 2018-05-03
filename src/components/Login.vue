@@ -37,10 +37,8 @@ export default {
           password: this.password,
         }).then(() => {
           this.$router.push(this.redirect);
-        }).catch((error) => {
+        }).catch(() => {
           this.errors.push('Authentication failed.');
-          // eslint-disable-next-line
-          console.error(error);
         });
       } else {
         this.errors.push('Credentials missing.');
