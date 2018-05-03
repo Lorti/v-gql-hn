@@ -6,7 +6,7 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const httpLink = new HttpLink({
-  uri: 'https://api.graph.cool/simple/v1/cjgmbdplk4nw40123gbcks285',
+  uri: 'https://api.graph.cool/simple/...',
 });
 
 // https://github.com/apollographql/apollo-client/blob/master/docs/source/recipes/authentication.md#header

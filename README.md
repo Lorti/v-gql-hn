@@ -5,10 +5,23 @@
 ## Build Setup
 
 ### Graphcool
-https://github.com/graphcool-examples/vue-graphql/tree/master/quickstart-with-apollo
-https://github.com/graphcool/templates/tree/master/auth/email-password
+
+```bash
+npm install -g graphcool
+
+graphcool init v-gql-hn-graphcool
+
+graphcool add-template graphcool/templates/auth/email-password
+
+# edit `graphcool.yml` and `types.graphql` files
+
+graphcool deploy
+
+# copy `Simple API` URL to `src\apollo.js`
+```
 
 ### Vue.js
+
 ``` bash
 # install dependencies
 npm install
