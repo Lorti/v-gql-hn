@@ -1,4 +1,4 @@
-export const types = {
+export const mutationTypes = {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
   SET_USER: 'SET_USER',
@@ -7,22 +7,22 @@ export const types = {
 };
 
 export default {
-  [types.LOGIN]: (state, id) => {
+  [mutationTypes.LOGIN]: (state, id) => {
     state.userId = id;
     state.isLoggedIn = true;
   },
-  [types.LOGOUT]: (state) => {
+  [mutationTypes.LOGOUT]: (state) => {
     state.userId = null;
     state.isLoggedIn = false;
   },
-  [types.SET_USER]: (state, id) => {
+  [mutationTypes.SET_USER]: (state, id) => {
     state.userId = id;
     state.isLoggedIn = true;
   },
-  [types.SET_NEWS]: (state, news) => {
+  [mutationTypes.SET_NEWS]: (state, news) => {
     state.news = news;
   },
-  [types.ADD_NEWS]: (state, news) => {
+  [mutationTypes.ADD_NEWS]: (state, news) => {
     state.news.unshift(news);
   },
 };

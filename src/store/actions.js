@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 import apollo from '../apollo';
 
-import { types as mutationTypes } from './mutations';
+import { mutationTypes } from './mutations';
 
-export const types = {
+export const actionTypes = {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
   FETCH_USER: 'FETCH_USER',
@@ -11,82 +11,79 @@ export const types = {
   SUBMIT: 'SUBMIT',
 };
 
-const loggedInUser = gql `
-  query {
-    loggedInUser {
-      id
-    }
-  }
-`;
-
-const authenticateUser = gql `
-  mutation authenticateUser($email: String!, $password: String!) {
-    authenticateUser(email: $email, password: $password) {
-      id,
-      token
-    }
-  }
-`;
-
-const fetchLatestNews = gql `
-  query {
-    allNews(orderBy: createdAt_DESC) {
-      id,
-      title,
-      url
-    }
-  }
-`;
-
-const createNews = gql `
-  mutation createNews($title: String!, $url: String!, $authorId: ID!) {
-    createNews(title: $title, url: $url, authorId: $authorId) {
-      id,
-      title,
-      url
-    }
-  }
-`;
-
 export default {
-  [types.LOGIN]({ commit }, credentials) {
+  [actionTypes.LOGIN]({ commit }, credentials) {
     return apollo.mutate({
-      mutation: authenticateUser,
+      mutation: gql `
+        mutation authenticateUser($email: String!, $password: String!) {
+          authenticateUser(email: $email, password: $password) {
+            id,
+            token
+          }
+        }
+      `,
       variables: credentials,
-    }).then(({ data: { authenticateUser: { id, token } } }) => {
+    }).then(({ data: { authenticateUser } }) => {
+      const { id, token } = authenticateUser;
       localStorage.setItem('token', token);
       commit(mutationTypes.LOGIN, id);
     });
   },
-  [types.LOGOUT]({ commit }) {
+
+  [actionTypes.LOGOUT]({ commit }) {
     localStorage.removeItem('token');
     commit(mutationTypes.LOGOUT);
   },
-  [types.FETCH_USER]({ commit }) {
+
+  [actionTypes.FETCH_USER]({ commit }) {
     return apollo.query({
-      query: loggedInUser,
-    }).then(({ data: { loggedInUser: user } }) => {
-      if (Object.hasOwnProperty.call(user || {}, 'id')) {
-        commit(mutationTypes.SET_USER, user.id);
+      query: gql `
+        query {
+          loggedInUser {
+            id
+          }
+        }
+      `,
+    }).then(({ data: { loggedInUser } }) => {
+      if (Object.hasOwnProperty.call(loggedInUser || {}, 'id')) {
+        commit(mutationTypes.SET_USER, loggedInUser.id);
       }
     });
   },
-  [types.FETCH_NEWS]({ commit }) {
+
+  [actionTypes.FETCH_NEWS]({ commit }) {
     return apollo.query({
-      query: fetchLatestNews,
+      query: gql `
+        query {
+          allNews(orderBy: createdAt_DESC) {
+            id,
+            title,
+            url
+          }
+        }
+      `,
       fetchPolicy: 'network-only',
-    }).then(({ data: { allNews: news } }) => {
-      commit(mutationTypes.SET_NEWS, news);
+    }).then(({ data: { allNews } }) => {
+      commit(mutationTypes.SET_NEWS, allNews);
     });
   },
-  [types.SUBMIT]({ commit, state }, news) {
+
+  [actionTypes.SUBMIT]({ commit, state }, news) {
     return apollo.mutate({
-      mutation: createNews,
+      mutation: gql `
+        mutation createNews($title: String!, $url: String!, $authorId: ID!) {
+          createNews(title: $title, url: $url, authorId: $authorId) {
+            id,
+            title,
+            url
+          }
+        }
+      `,
       variables: Object.assign({}, news, {
         authorId: state.userId,
       }),
-    }).then(({ data: { createNews: result } }) => {
-      commit(mutationTypes.ADD_NEWS, result);
+    }).then(({ data: { createNews } }) => {
+      commit(mutationTypes.ADD_NEWS, createNews);
     });
   },
 };
