@@ -1,10 +1,10 @@
 <template>
-  <ul>
+  <transition-group name="list" tag="ul">
     <li v-for="item in news" :key="item.id">
       <a :href="item.url">{{ item.title }}</a>
       <small>{{ item.url | host }}</small>
     </li>
-  </ul>
+  </transition-group>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
       this.$store.dispatch(actionTypes.FETCH_NEWS);
     };
     fetchNews();
-    this.pollingInterval = setInterval(fetchNews, 60000);
+    this.pollingInterval = setInterval(fetchNews, 1000);
   },
   destroyed() {
     clearInterval(this.pollingInterval);
@@ -30,5 +30,23 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+  ul {
+    position: relative;
+  }
+  li {
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    transition: all 1s;
+  }
+  .list-enter,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  .list-leave-active {
+    position: absolute;
+  }
+</style>

@@ -23,6 +23,6 @@ export default {
     state.news = news;
   },
   [mutationTypes.ADD_NEWS]: (state, news) => {
-    state.news.unshift(news);
+    state.news = [news, ...state.news];
   },
 };

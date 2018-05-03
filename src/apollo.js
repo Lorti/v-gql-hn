@@ -24,12 +24,14 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message, locations, path }) =>
-      console.error(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      ),
+      // eslint-disable-next-line no-console
+      console.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
     );
   }
-  if (networkError) console.error(`[Network error]: ${networkError}`);
+  if (networkError) {
+    // eslint-disable-next-line no-console
+    console.error(`[Network error]: ${networkError}`);
+  }
 });
 
 const link = ApolloLink.from([

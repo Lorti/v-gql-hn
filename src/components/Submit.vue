@@ -4,11 +4,11 @@
     <ul v-if="errors.length">
       <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
     </ul>
-    <label for="title">Title:</label>
+    <label for="title">Title</label>
     <input id="title" type="text" name="title" size="20" v-model="title">
-    <label for="url">URL:</label>
+    <label for="url">URL</label>
     <input id="url" type="text" name="url" size="20" v-model="url">
-    <input type="submit" value="Submit" :disabled="loading">
+    <button type="submit" :disabled="loading">Submit</button>
   </form>
 </template>
 

@@ -35,7 +35,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+*, *:before, *:after {
+  box-sizing: border-box;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -59,6 +62,22 @@ a {
   color: #42b983;
   text-decoration: underline;
   cursor: pointer;
+}
+form {
+  margin: 0 auto;
+  max-width: 320px;
+  label {
+    display: block;
+    text-align: left;
+  }
+  input,
+  button {
+    display: block;
+    margin-bottom: 1rem;
+    width: 100%;
+    line-height: 1.5;
+    font-size: inherit;
+  }
 }
 .fade-enter-active,
 .fade-leave-active {

@@ -4,11 +4,11 @@
     <ul v-if="errors.length">
       <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
     </ul>
-    <label for="email">Email:</label>
+    <label for="email">Email</label>
     <input id="email" type="text" name="email" size="20" v-model="email">
-    <label for="password">Password:</label>
+    <label for="password">Password</label>
     <input id="password" type="password" name="password" size="20" v-model="password">
-    <input type="submit" value="Login" :disabled="loading">
+    <button type="submit" :disabled="loading">Login</button>
   </form>
 </template>
 
