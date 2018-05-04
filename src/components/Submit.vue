@@ -28,7 +28,7 @@ export default {
     };
   },
   methods: {
-    submit() {
+    async submit() {
       this.errors = [];
 
       if (!this.title || !this.url) {
@@ -37,16 +37,17 @@ export default {
 
       this.loading = true;
 
-      this.$store.dispatch(actionTypes.SUBMIT, {
-        title: this.title,
-        url: this.url,
-      }).then(() => {
+      try {
+        await this.$store.dispatch(actionTypes.SUBMIT, {
+          title: this.title,
+          url: this.url,
+        });
         this.$router.push('/');
         this.loading = false;
-      }).catch(() => {
+      } catch (error) {
         this.errors.push('Submit failed.');
         this.loading = false;
-      });
+      }
     },
   },
 };

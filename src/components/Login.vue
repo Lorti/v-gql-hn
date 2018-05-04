@@ -32,7 +32,7 @@ export default {
     this.redirect = this.$route.query.redirect || '/';
   },
   methods: {
-    submit() {
+    async submit() {
       this.errors = [];
 
       if (!this.email || !this.password) {
@@ -42,16 +42,17 @@ export default {
 
       this.loading = true;
 
-      this.$store.dispatch(actionTypes.LOGIN, {
-        email: this.email,
-        password: this.password,
-      }).then(() => {
+      try {
+        this.$store.dispatch(actionTypes.LOGIN, {
+          email: this.email,
+          password: this.password,
+        });
         this.$router.push(this.redirect);
         this.loading = false;
-      }).catch(() => {
+      } catch (error) {
         this.errors.push('Login failed.');
         this.loading = false;
-      });
+      }
     },
   },
 };
