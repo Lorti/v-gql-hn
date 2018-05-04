@@ -1,10 +1,13 @@
 <template>
-  <transition-group name="list" tag="ul">
-    <li v-for="item in news" :key="item.id">
-      <a :href="item.url">{{ item.title }}</a>
-      <small>{{ item.url | host }}</small>
-    </li>
-  </transition-group>
+  <div>
+    <h1>List</h1>
+    <transition-group name="list" tag="ol">
+      <li v-for="item in news" :key="item.id">
+        <a :href="item.url">{{ item.title }}</a>
+        <small>{{ item.url | host }}</small>
+      </li>
+    </transition-group>
+  </div>
 </template>
 
 <script>
@@ -31,20 +34,19 @@ export default {
 </script>
 
 <style scoped>
-  ul {
+  ol {
     position: relative;
+    padding-left: 0;
   }
   li {
     display: block;
-    margin-left: 0;
-    margin-right: 0;
     width: 100%;
+    margin: 1rem 0;
     transition: all 1s;
   }
   .list-enter,
   .list-leave-to {
     opacity: 0;
-    transform: translateX(-10px);
   }
   .list-leave-active {
     position: absolute;

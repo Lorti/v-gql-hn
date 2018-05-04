@@ -1,12 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <nav>
-      <router-link to="/">List</router-link>
-      <router-link to="/submit">Submit</router-link>
-      <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
-      <a v-else @click="logout">Logout</a>
-    </nav>
+    <navigation></navigation>
     <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
@@ -14,23 +8,16 @@
 </template>
 
 <script>
+import Navigation from '@/components/Navigation';
 import { actionTypes } from './store/actions';
 
 export default {
   name: 'App',
+  components: {
+    navigation: Navigation,
+  },
   created() {
     this.$store.dispatch(actionTypes.FETCH_USER);
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch(actionTypes.LOGOUT);
-      this.$router.push('/');
-    },
   },
 };
 </script>
@@ -40,32 +27,20 @@ export default {
   box-sizing: border-box;
 }
 #app {
+  margin: 1rem;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 h1, h2 {
   font-weight: normal;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 a {
   color: #42b983;
-  text-decoration: underline;
-  cursor: pointer;
 }
 form {
   margin: 0 auto;
-  max-width: 320px;
   label {
     display: block;
     text-align: left;
@@ -75,8 +50,6 @@ form {
     display: block;
     margin-bottom: 1rem;
     width: 100%;
-    line-height: 1.5;
-    font-size: inherit;
   }
 }
 .fade-enter-active,

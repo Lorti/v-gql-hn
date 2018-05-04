@@ -1,15 +1,17 @@
 <template>
-  <form @submit.prevent="submit" action="/login" method="post">
-    <h2>Login</h2>
-    <ul v-if="errors.length">
-      <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-    </ul>
-    <label for="email">Email</label>
-    <input id="email" type="text" name="email" size="20" v-model="email">
-    <label for="password">Password</label>
-    <input id="password" type="password" name="password" size="20" v-model="password">
-    <button type="submit" :disabled="loading">Login</button>
-  </form>
+  <div>
+    <h1>Login</h1>
+    <form @submit.prevent="submit" action="/login" method="post">
+      <ul v-if="errors.length">
+        <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+      </ul>
+      <label for="email">E-Mail</label>
+      <input id="email" type="text" name="email" size="20" v-model="email">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" size="20" v-model="password">
+      <button type="submit" :disabled="loading">Login</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -54,6 +56,3 @@ export default {
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
