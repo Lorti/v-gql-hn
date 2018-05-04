@@ -56,7 +56,8 @@ export default {
           allNews(orderBy: createdAt_DESC) {
             id,
             title,
-            url
+            url,
+            createdAt
           }
         }
       `,
@@ -72,7 +73,8 @@ export default {
           createNews(title: $title, url: $url, authorId: $authorId) {
             id,
             title,
-            url
+            url,
+            createdAt
           }
         }
       `,

@@ -4,7 +4,8 @@
     <transition-group name="list" tag="ol">
       <li v-for="item in news" :key="item.id">
         <a :href="item.url">{{ item.title }}</a>
-        <small>{{ item.url | host }}</small>
+        <small>({{ item.url | domain }})</small><br>
+        <small>{{ item.createdAt | time }} ago</small>
       </li>
     </transition-group>
   </div>
@@ -25,7 +26,7 @@ export default {
       this.$store.dispatch(actionTypes.FETCH_NEWS);
     };
     fetchNews();
-    this.pollingInterval = setInterval(fetchNews, 1000);
+    this.pollingInterval = setInterval(fetchNews, 5000);
   },
   destroyed() {
     clearInterval(this.pollingInterval);
