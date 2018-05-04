@@ -2,7 +2,8 @@
   <header>
     <img src="../assets/logo.png">
     <nav>
-      <router-link to="/">List</router-link> |
+      <router-link to="/top">Top</router-link> |
+      <router-link to="/new">New</router-link> |
       <router-link to="/submit">Submit</router-link>
       <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
       <a v-else @click="logout">Logout</a>
@@ -47,11 +48,13 @@ export default {
     padding: 0 8px;
     color: inherit;
     line-height: 2;
-    font-weight: bold;
     text-decoration: none;
     cursor: pointer;
     &:last-of-type {
       float: right;
     }
+  }
+  .router-link-active {
+    font-weight: bold;
   }
 </style>

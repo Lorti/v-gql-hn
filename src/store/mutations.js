@@ -4,6 +4,7 @@ export const mutationTypes = {
   SET_USER: 'SET_USER',
   SET_NEWS: 'SET_NEWS',
   ADD_NEWS: 'ADD_NEWS',
+  UPVOTE: 'UPVOTE',
 };
 
 export default {
@@ -24,5 +25,11 @@ export default {
   },
   [mutationTypes.ADD_NEWS]: (state, news) => {
     state.news = [news, ...state.news];
+  },
+  [mutationTypes.UPVOTE]: (state, news) => {
+    const clone = [...state.news];
+    const index = clone.findIndex((record => record.id === news.id));
+    clone[index] = news;
+    state.news = clone;
   },
 };

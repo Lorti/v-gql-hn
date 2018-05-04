@@ -5,6 +5,10 @@ function pluralize(count, label) {
   return `${count + label}s`;
 }
 
+export function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export function domain(url) {
   const host = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
   const parts = host.split('.').slice(-3);

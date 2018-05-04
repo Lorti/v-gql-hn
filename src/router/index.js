@@ -12,7 +12,9 @@ const router = new Router({
   fallback: false,
   scrollBehavior: () => ({ y: 0 }),
   routes: [
-    { path: '/', component: List },
+    { path: '/', redirect: '/top' },
+    { path: '/top', component: List, props: { type: 'top' } },
+    { path: '/new', component: List, props: { type: 'new' } },
     { path: '/login', component: Login },
     { path: '/submit', component: Submit, meta: { requiresAuth: true } },
   ],
