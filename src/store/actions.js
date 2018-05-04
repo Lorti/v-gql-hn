@@ -12,8 +12,8 @@ export const actionTypes = {
 };
 
 export default {
-  [actionTypes.LOGIN]({ commit }, credentials) {
-    return apollo.mutate({
+  async [actionTypes.LOGIN]({ commit }, credentials) {
+    const { data: { authenticateUser } } = await apollo.mutate({
       mutation: gql `
         mutation authenticateUser($email: String!, $password: String!) {
           authenticateUser(email: $email, password: $password) {
@@ -23,11 +23,10 @@ export default {
         }
       `,
       variables: credentials,
-    }).then(({ data: { authenticateUser } }) => {
-      const { id, token } = authenticateUser;
-      localStorage.setItem('token', token);
-      commit(mutationTypes.LOGIN, id);
     });
+    const { id, token } = authenticateUser;
+    localStorage.setItem('token', token);
+    commit(mutationTypes.LOGIN, id);
   },
 
   [actionTypes.LOGOUT]({ commit }) {
@@ -35,8 +34,8 @@ export default {
     commit(mutationTypes.LOGOUT);
   },
 
-  [actionTypes.FETCH_USER]({ commit }) {
-    return apollo.query({
+  async [actionTypes.FETCH_USER]({ commit }) {
+    const { data: { loggedInUser } } = await apollo.query({
       query: gql `
         query {
           loggedInUser {
@@ -44,15 +43,14 @@ export default {
           }
         }
       `,
-    }).then(({ data: { loggedInUser } }) => {
-      if (Object.hasOwnProperty.call(loggedInUser || {}, 'id')) {
-        commit(mutationTypes.SET_USER, loggedInUser.id);
-      }
     });
+    if (Object.hasOwnProperty.call(loggedInUser || {}, 'id')) {
+      commit(mutationTypes.SET_USER, loggedInUser.id);
+    }
   },
 
-  [actionTypes.FETCH_NEWS]({ commit }) {
-    return apollo.query({
+  async [actionTypes.FETCH_NEWS]({ commit }) {
+    const { data: { allNews } } = await apollo.query({
       query: gql `
         query {
           allNews(orderBy: createdAt_DESC) {
@@ -63,13 +61,12 @@ export default {
         }
       `,
       fetchPolicy: 'network-only',
-    }).then(({ data: { allNews } }) => {
-      commit(mutationTypes.SET_NEWS, allNews);
     });
+    commit(mutationTypes.SET_NEWS, allNews);
   },
 
-  [actionTypes.SUBMIT]({ commit, state }, news) {
-    return apollo.mutate({
+  async [actionTypes.SUBMIT]({ commit, state }, news) {
+    const { data: { createNews } } = await apollo.mutate({
       mutation: gql `
         mutation createNews($title: String!, $url: String!, $authorId: ID!) {
           createNews(title: $title, url: $url, authorId: $authorId) {
@@ -82,8 +79,7 @@ export default {
       variables: Object.assign({}, news, {
         authorId: state.userId,
       }),
-    }).then(({ data: { createNews } }) => {
-      commit(mutationTypes.ADD_NEWS, createNews);
     });
+    commit(mutationTypes.ADD_NEWS, createNews);
   },
 };
