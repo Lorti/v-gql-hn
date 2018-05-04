@@ -11,6 +11,15 @@ export const actionTypes = {
   SUBMIT: 'SUBMIT',
 };
 
+const fragment = `
+  fragment newsFields on News {
+    id,
+    title,
+    url,
+    createdAt
+  }
+`;
+
 export default {
   async [actionTypes.LOGIN]({ commit }, credentials) {
     const { data: { authenticateUser } } = await apollo.mutate({
@@ -54,12 +63,10 @@ export default {
       query: gql `
         query {
           allNews(orderBy: createdAt_DESC) {
-            id,
-            title,
-            url,
-            createdAt
+            ...newsFields
           }
         }
+        ${fragment}
       `,
       fetchPolicy: 'network-only',
     });
@@ -71,12 +78,10 @@ export default {
       mutation: gql `
         mutation createNews($title: String!, $url: String!, $authorId: ID!) {
           createNews(title: $title, url: $url, authorId: $authorId) {
-            id,
-            title,
-            url,
-            createdAt
+            ...newsFields
           }
         }
+        ${fragment}
       `,
       variables: Object.assign({}, news, {
         authorId: state.userId,
