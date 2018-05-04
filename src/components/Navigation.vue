@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span class="logo">V</span>
+    <img src="../assets/logo.png">
     <nav>
       <router-link to="/">List</router-link> |
       <router-link to="/submit">Submit</router-link>
@@ -36,14 +36,11 @@ export default {
     background: #42b983;
     text-align: left;
   }
-  .logo {
+  img {
     float: left;
     margin: 4px;
     width: 24px;
     height: 24px;
-    line-height: 24px;
-    text-align: center;
-    border: 1px solid #fff;
   }
   a {
     display: inline-block;
