@@ -26,10 +26,10 @@ export default {
   [mutationTypes.ADD_NEWS]: (state, news) => {
     state.news = [news, ...state.news];
   },
-  [mutationTypes.UPVOTE]: (state, news) => {
+  [mutationTypes.UPVOTE]: (state, { id, points }) => {
     const clone = [...state.news];
-    const index = clone.findIndex((record => record.id === news.id));
-    clone[index] = news;
+    const index = clone.findIndex(news => news.id === id);
+    clone[index] = Object.assign({}, clone[index], { points });
     state.news = clone;
   },
 };

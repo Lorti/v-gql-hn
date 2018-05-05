@@ -7,17 +7,18 @@
 ### Graphcool
 
 ```bash
+# install command line tool
 npm install -g graphcool
 
-graphcool init v-gql-hn-graphcool
+# clone companion server project
+git clone https://github.com/Lorti/v-gql-hn-graphcool
+cd v-gql-hn-graphcool
+npm install
 
-graphcool add-template graphcool/templates/auth/email-password
-
-# edit `graphcool.yml` and `types.graphql` files
-
+# deploy companion server project
 graphcool deploy
 
-# copy `Simple API` URL to `src\apollo.js`
+# manually copy `Simple API` URL to `src\apollo.js`
 ```
 
 ### Vue.js

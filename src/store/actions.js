@@ -18,10 +18,8 @@ const fragment = `
     createdAt,
     title,
     url,
-    author {
-      username,
-    },
-    points,
+    author { username },
+    points
   }
 `;
 
@@ -32,7 +30,7 @@ export default {
         mutation authenticateUser($email: String!, $password: String!) {
           authenticateUser(email: $email, password: $password) {
             id,
-            token,
+            token
           }
         }
       `,
@@ -53,7 +51,7 @@ export default {
       query: gql `
         query {
           loggedInUser {
-            id,
+            id
           }
         }
       `,
@@ -68,7 +66,7 @@ export default {
       query: gql `
         query {
           allNews(orderBy: createdAt_DESC) {
-            ...newsFields,
+            ...newsFields
           }
         }
         ${fragment}
@@ -83,7 +81,7 @@ export default {
       mutation: gql `
         mutation createNews($title: String!, $url: String!, $authorId: ID!) {
           createNews(title: $title, url: $url, authorId: $authorId) {
-            ...newsFields,
+            ...newsFields
           }
         }
         ${fragment}
@@ -95,22 +93,20 @@ export default {
     commit(mutationTypes.ADD_NEWS, createNews);
   },
 
-  // TODO Create a special resolver for upvotes on the server!
   async [actionTypes.UPVOTE]({ commit }, news) {
-    const { data: { updateNews } } = await apollo.mutate({
+    const { data: { upvote } } = await apollo.mutate({
       mutation: gql `
-        mutation updateNews($id: ID!, $points: Int!) {
-          updateNews(id: $id, points: $points) {
-            ...newsFields,
+        mutation upvoteNews($id: ID!) {
+          upvote(id: $id) {
+            id,
+            points
           }
         }
-        ${fragment}
       `,
       variables: {
         id: news.id,
-        points: news.points + 1,
       },
     });
-    commit(mutationTypes.UPVOTE, updateNews);
+    commit(mutationTypes.UPVOTE, upvote);
   },
 };
