@@ -54,9 +54,8 @@ export default {
     position: relative;
   }
   li {
-    width: 100%;
     margin: 1rem 0;
-    transition: all 1s;
+    transition: opacity 1s, transform 1s;
     span {
       display: block;
     }
@@ -73,5 +72,7 @@ export default {
   }
   .list-leave-active {
     position: absolute;
+    left: 40px;
+    right: 0;
   }
 </style>

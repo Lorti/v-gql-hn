@@ -4,8 +4,18 @@ import List from '@/components/List';
 import Login from '@/components/Login';
 import Submit from '@/components/Submit';
 import store from '../store';
+import { capitalize } from '../util/filters';
 
 Vue.use(Router);
+
+function createListComponent(type) {
+  return {
+    title: capitalize(type),
+    render(h) {
+      return h(List, { props: { type } });
+    },
+  };
+}
 
 const router = new Router({
   mode: 'history',
@@ -13,8 +23,8 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     { path: '/', redirect: '/top' },
-    { path: '/top', component: List, props: { type: 'top' } },
-    { path: '/new', component: List, props: { type: 'new' } },
+    { path: '/top', component: createListComponent('top') },
+    { path: '/new', component: createListComponent('new') },
     { path: '/login', component: Login },
     { path: '/submit', component: Submit, meta: { requiresAuth: true } },
   ],
