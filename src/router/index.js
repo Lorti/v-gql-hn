@@ -45,6 +45,7 @@ const router = new Router({
         props: true,
       }],
     },
+    { path: '*', component: { template: '<h1>404</h1>' } },
   ],
 });
 
