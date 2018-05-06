@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Submit</h1>
+    <h2>Submit</h2>
     <form @submit.prevent="submit" action="/submit" method="post">
       <ul v-if="errors.length">
         <li v-for="(error, index) in errors" :key="index">{{ error }}</li>

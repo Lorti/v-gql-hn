@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>User <small>{{ user.id }}</small></h1>
+    <h2>User <small>{{ user.id }}</small></h2>
     <header>
       <router-link :to="{ name: 'user-profile' }">Profile</router-link>
       <router-link :to="{ name: 'user-news' }">News</router-link>
@@ -36,7 +36,7 @@ export default {
 <style lang="scss" scoped>
   small {
     display: block;
-    font-size: 1.25rem;
+    font-size: 1rem;
   }
   // Transition styles are inherited from `App`.
 </style>

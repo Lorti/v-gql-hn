@@ -22,9 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  dl {
-    padding-left: 40px;
-  }
   dd {
     font-weight: bold;
   }

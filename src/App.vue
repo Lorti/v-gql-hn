@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <navigation></navigation>
-    <transition name="fade" mode="out-in">
-      <router-view></router-view>
-    </transition>
+    <main>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </main>
   </div>
 </template>
 
@@ -23,21 +25,35 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700');
 *, *:before, *:after {
   box-sizing: border-box;
 }
+html {
+  background: hsl(0, 0%, 95%);
+}
+body {
+  margin: 1rem 10%;
+  cursor: default;
+}
 #app {
-  margin: 1rem;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  background: #fff;
+  box-shadow: 0 10px 20px hsl(0, 0%, 90%);
+}
+main {
+  margin: 2rem;
 }
 h1, h2 {
   font-weight: normal;
 }
 a {
   color: #42b983;
+  text-decoration: none;
 }
 form {
   margin: 0 auto;

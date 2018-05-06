@@ -1,23 +1,25 @@
 <template>
-  <div>
-    <h1>{{ type | capitalize }}</h1>
-    <transition-group name="list" tag="ol">
-      <li v-for="item of news" :key="item.id">
-        <span>
-          <a :href="item.url">{{ item.title }}</a>
-          <small>({{ item.url | domain }})</small>
-          <button @click="upvote(item)">Upvote</button>
-        </span>
-        <span>
-          <small>
-            {{ item.points }} points
+  <transition-group name="list" tag="ol">
+    <li v-for="(item, index) of news" :key="item.id">
+      <div class="layout">
+        <div class="index">{{ index + 1 }}</div>
+        <div class="points">
+          <button @click="upvote(item)" class="upvote">⬆</button>
+          {{ item.points }}
+        </div>
+        <div>
+          <div class="main">
+            <a :href="item.url" class="title">{{ item.title }}</a>
+            <span class="domain">({{ item.url | domain }})</span>
+          </div>
+          <div class="meta">
+            submitted {{ item.createdAt | time }} ago
             by <router-link :to="profileLink(item)">{{ item.author.username }}</router-link>
-            {{ item.createdAt | time }} ago
-          </small>
-        </span>
-      </li>
-    </transition-group>
-  </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </transition-group>
 </template>
 
 <script>
@@ -56,19 +58,55 @@ export default {
 <style lang="scss" scoped>
   ol {
     position: relative;
+    padding-left: 0;
+    list-style: none;
   }
   li {
     margin: 1rem 0;
+    width: 100%;
     transition: opacity 1s, transform 1s;
-    span {
-      display: block;
-    }
-    span + span {
-      line-height: 1;
-    }
   }
-  button {
-    float: right;
+  .layout {
+    display: flex;
+    align-items: center;
+  }
+  .index {
+    flex-shrink: 0;
+    width: 1.5rem;
+    text-align: right;
+    margin-left: -.5rem;
+    color: hsl(0, 0%, 25%);
+  }
+  .points {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 2rem;
+    font-size: .75rem;
+    line-height: 1;
+    font-weight: bold;
+  }
+  .upvote {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  .main {
+    line-height: 1;
+    margin-bottom: .5rem;
+  }
+  .title {
+    font-size: 1.125rem;
+  }
+  .domain {
+    font-size: .75rem;
+    color: hsl(0, 0%, 50%);
+  }
+  .meta {
+    font-size: .75rem;
+    line-height: 1;
+    color: hsl(0, 0%, 25%);
   }
   .list-enter,
   .list-leave-to {
@@ -76,7 +114,5 @@ export default {
   }
   .list-leave-active {
     position: absolute;
-    left: 40px;
-    right: 0;
   }
 </style>

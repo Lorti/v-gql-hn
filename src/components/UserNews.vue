@@ -30,4 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  ol {
+    list-style: none;
+    padding-left: 0;
+  }
 </style>

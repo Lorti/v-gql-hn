@@ -39,22 +39,26 @@ export default {
   }
   img {
     float: left;
-    margin: 4px;
+    margin: 10px;
     width: 24px;
     height: 24px;
   }
   a {
     display: inline-block;
     padding: 0 8px;
+    border-bottom: 2px solid transparent;
     color: inherit;
-    line-height: 2;
+    line-height: 44px;
     text-decoration: none;
     cursor: pointer;
+
     &:last-of-type {
       float: right;
+      margin-right: 10px;
     }
   }
   .router-link-active {
     font-weight: bold;
+    border-color: #fff;
   }
 </style>
