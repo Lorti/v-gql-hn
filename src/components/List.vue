@@ -2,7 +2,7 @@
   <div>
     <h1>{{ type | capitalize }}</h1>
     <transition-group name="list" tag="ol">
-      <li v-for="item in news" :key="item.id">
+      <li v-for="item of news" :key="item.id">
         <span>
           <a :href="item.url">{{ item.title }}</a>
           <small>({{ item.url | domain }})</small>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { actionTypes } from '../store/actions';
+import actionTypes from '../store/action-types';
 
 export default {
   name: 'List',

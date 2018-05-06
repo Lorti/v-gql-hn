@@ -8,9 +8,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userId: null,
-    isLoggedIn: !!localStorage.getItem('token'),
-    news: [],
+    currentUser: null,
+    news: {/* [id: string]: news */},
+    users: {/* [id: string]: user */},
+    // TODO Fetch different lists, instead of fetching all news.
+    lists: {
+      top: [/* number */],
+      new: [],
+    },
   },
   actions,
   mutations,

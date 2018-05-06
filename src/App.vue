@@ -9,7 +9,7 @@
 
 <script>
 import Navigation from '@/components/Navigation';
-import { actionTypes } from './store/actions';
+import actionTypes from './store/action-types';
 
 export default {
   name: 'App',
@@ -17,7 +17,7 @@ export default {
     navigation: Navigation,
   },
   created() {
-    this.$store.dispatch(actionTypes.FETCH_USER);
+    this.$store.dispatch(actionTypes.FETCH_CURRENT_USER);
   },
 };
 </script>

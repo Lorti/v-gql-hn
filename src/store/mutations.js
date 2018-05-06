@@ -1,35 +1,35 @@
-export const mutationTypes = {
-  LOGIN: 'LOGIN',
-  LOGOUT: 'LOGOUT',
-  SET_USER: 'SET_USER',
-  SET_NEWS: 'SET_NEWS',
-  ADD_NEWS: 'ADD_NEWS',
-  UPVOTE: 'UPVOTE',
-};
+import Vue from 'vue';
+import mutationTypes from './mutation-types';
 
 export default {
   [mutationTypes.LOGIN]: (state, id) => {
-    state.userId = id;
-    state.isLoggedIn = true;
+    state.currentUser = id;
   },
   [mutationTypes.LOGOUT]: (state) => {
-    state.userId = null;
-    state.isLoggedIn = false;
+    state.currentUser = null;
   },
-  [mutationTypes.SET_USER]: (state, id) => {
-    state.userId = id;
-    state.isLoggedIn = true;
+  [mutationTypes.SET_LOGGED_IN_USER]: (state, id) => {
+    state.currentUser = id;
+  },
+  [mutationTypes.SET_USERS]: (state, users) => {
+    users.forEach((item) => {
+      if (item) {
+        Vue.set(state.users, item.id, item);
+      }
+    });
   },
   [mutationTypes.SET_NEWS]: (state, news) => {
-    state.news = news;
+    news.forEach((item) => {
+      if (item) {
+        Vue.set(state.news, item.id, item);
+      }
+    });
   },
   [mutationTypes.ADD_NEWS]: (state, news) => {
-    state.news = [news, ...state.news];
+    Vue.set(state.news, news.id, news);
   },
   [mutationTypes.UPVOTE]: (state, { id, points }) => {
-    const clone = [...state.news];
-    const index = clone.findIndex(news => news.id === id);
-    clone[index] = Object.assign({}, clone[index], { points });
-    state.news = clone;
+    const clone = Object.assign({}, state.news[id], { points });
+    Vue.set(state.news, id, clone);
   },
 };

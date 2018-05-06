@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { actionTypes } from '../store/actions';
+import actionTypes from '../store/action-types';
 
 export default {
   name: 'Submit',
