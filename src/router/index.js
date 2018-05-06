@@ -3,6 +3,9 @@ import Router from 'vue-router';
 import List from '@/components/List';
 import Login from '@/components/Login';
 import Submit from '@/components/Submit';
+import User from '@/components/User';
+import UserNews from '@/components/UserNews';
+import UserProfile from '@/components/UserProfile';
 import store from '../store';
 import { capitalize } from '../util/filters';
 
@@ -27,6 +30,19 @@ const router = new Router({
     { path: '/new', component: createListComponent('new') },
     { path: '/login', component: Login },
     { path: '/submit', component: Submit, meta: { requiresAuth: true } },
+    { path: '/users/:id',
+      component: User,
+      props: true,
+      children: [{
+        path: 'profile',
+        component: UserProfile,
+        props: true,
+      }, {
+        path: 'news',
+        component: UserNews,
+        props: true,
+      }],
+    },
   ],
 });
 

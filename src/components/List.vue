@@ -11,7 +11,7 @@
         <span>
           <small>
             {{ item.points }} points
-            by {{ item.author.username }}
+            by <router-link :to="profileLink(item)">{{ item.author.username }}</router-link>
             {{ item.createdAt | time }} ago
           </small>
         </span>
@@ -34,6 +34,9 @@ export default {
   methods: {
     upvote(item) {
       this.$store.dispatch(actionTypes.UPVOTE, item);
+    },
+    profileLink(item) {
+      return `/users/${item.author.id}/profile`;
     },
   },
   created() {
