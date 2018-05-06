@@ -43,7 +43,7 @@ export default {
       this.loading = true;
 
       try {
-        this.$store.dispatch(actionTypes.LOGIN, {
+        await this.$store.dispatch(actionTypes.LOGIN, {
           email: this.email,
           password: this.password,
         });

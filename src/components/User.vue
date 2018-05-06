@@ -1,11 +1,13 @@
 <template>
   <div>
+    <h1>User <small>{{ user.id }}</small></h1>
     <header>
-      <h1>{{ user.id }}</h1>
-      <router-link :to="profileLink">Profile</router-link>
-      <router-link :to="newsLink">News</router-link>
+      <router-link :to="{ name: 'user-profile' }">Profile</router-link>
+      <router-link :to="{ name: 'user-news' }">News</router-link>
     </header>
-    <router-view></router-view>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -27,21 +29,14 @@ export default {
     user() {
       return this.$store.state.users[this.id];
     },
-    profileLink() {
-      return `/users/${this.user.id}/profile`;
-    },
-    newsLink() {
-      return `/users/${this.user.id}/news`;
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  h1 {
+  small {
+    display: block;
     font-size: 1.25rem;
   }
-  header {
-    padding: .5rem 0 1rem 40px;
-  }
+  // Transition styles are inherited from `App`.
 </style>

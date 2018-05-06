@@ -36,7 +36,7 @@ export default {
       this.$store.dispatch(actionTypes.UPVOTE, item);
     },
     profileLink(item) {
-      return `/users/${item.author.id}/profile`;
+      return { name: 'user-profile', params: { id: item.author.id } };
     },
   },
   created() {

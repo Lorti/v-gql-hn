@@ -35,10 +35,12 @@ const router = new Router({
       props: true,
       children: [{
         path: 'profile',
+        name: 'user-profile',
         component: UserProfile,
         props: true,
       }, {
         path: 'news',
+        name: 'user-news',
         component: UserNews,
         props: true,
       }],
