@@ -40,10 +40,11 @@ export default {
     },
   },
   created() {
-    const fetchNews = () => {
-      this.$store.dispatch(actionTypes.FETCH_NEWS);
-    };
-    fetchNews();
+    const fetchNews = () => this.$store.dispatch(actionTypes.FETCH_NEWS);
+    fetchNews().then(() => {
+      // You'll need this for https://github.com/chrisvfritz/prerender-spa-plugin.
+      document.dispatchEvent(new Event('prerender-trigger'));
+    });
     this.pollingInterval = setInterval(fetchNews, 5000);
   },
   destroyed() {
