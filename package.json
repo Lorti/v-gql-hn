@@ -2,7 +2,10 @@
   "name": "v-gql-hn",
   "version": "1.0.0",
   "description": "Hacker News w/ Vue.js and GraphQL",
-  "author": "office@manuelwieser.com",
+  "author": {
+    "name": "Manuel Wieser",
+    "url": "https://github.com/Lorti"
+  },
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
