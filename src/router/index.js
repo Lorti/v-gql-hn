@@ -3,9 +3,6 @@ import Router from 'vue-router';
 import List from '@/components/List';
 import Login from '@/components/Login';
 import Submit from '@/components/Submit';
-import User from '@/components/User';
-import UserNews from '@/components/UserNews';
-import UserProfile from '@/components/UserProfile';
 import store from '../store';
 import { capitalize } from '../util/filters';
 
@@ -30,17 +27,17 @@ const router = new Router({
     { path: '/login', component: Login },
     { path: '/submit', component: Submit, meta: { requiresAuth: true } },
     { path: '/users/:id',
-      component: User,
+      component: () => import(/* webpackChunkName: "user" */ '@/components/User'),
       props: true,
       children: [{
         path: 'profile',
         name: 'user-profile',
-        component: UserProfile,
+        component: () => import(/* webpackChunkName: "user" */ '@/components/UserProfile'),
         props: true,
       }, {
         path: 'news',
         name: 'user-news',
-        component: UserNews,
+        component: () => import(/* webpackChunkName: "user" */ '@/components/UserNews'),
         props: true,
       }],
     },
