@@ -23,7 +23,6 @@ function createListComponent(type) {
 const router = new Router({
   mode: 'history',
   fallback: false,
-  scrollBehavior: () => ({ y: 0 }),
   routes: [
     { path: '/', redirect: '/top' },
     { path: '/top', component: createListComponent('top') },
@@ -47,6 +46,12 @@ const router = new Router({
     },
     { path: '*', component: { template: '<h1>404</h1>' } },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { x: 0, y: 0 };
+  },
 });
 
 router.beforeEach((to, from, next) => {
